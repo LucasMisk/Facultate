@@ -19,7 +19,7 @@ public class Timer implements iTimer
         if (State == TimerState.Running)
         {
             EndTime=System.nanoTime();
-            StoredTime=+(EndTime-StartTime);
+            StoredTime+=(EndTime-StartTime);
             State=TimerState.Stopped;
         }
         return StoredTime;
@@ -34,7 +34,7 @@ public class Timer implements iTimer
     @Override
     public long pause() {
         EndTime=System.nanoTime();
-        StoredTime=+(EndTime-StartTime);
+        StoredTime+=(EndTime-StartTime);
         State=TimerState.Paused;
         return StoredTime;
     }
