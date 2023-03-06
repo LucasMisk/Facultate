@@ -7,5 +7,8 @@ public interface iLog {
 
     void write(Object... values);
 
+    void writeTime(String string, long value, TimeUnit unit);
+
+
     void close();
 }

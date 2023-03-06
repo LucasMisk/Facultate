@@ -37,6 +37,11 @@ public class FileLogger implements iLog {
     }
 
     @Override
+    public void writeTime(String string, long value, TimeUnit unit) {
+
+    }
+
+    @Override
     public void close() {
             if(file != null)
                 file.close();
