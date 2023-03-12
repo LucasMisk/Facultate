@@ -25,5 +25,16 @@ public class TestDemoBench
         log.writeTime("Finished in", time, Second);
         log.close();
         bench.clean();
-    }
+
+        final int workload = 100;
+        bench.initialize(workload);
+        for (int i = 0; i < 12; ++i)
+        {
+            timer.resume();
+            bench.run();
+            long time1 = timer.pause();
+            log.write("Run " + i + ":", time1);
+        }
+        log.write("Finished in", timer.stop());
+}
 }
