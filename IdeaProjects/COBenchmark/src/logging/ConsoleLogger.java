@@ -16,7 +16,7 @@ public class ConsoleLogger implements iLog
     public void write(Object... values) {
         for(Object o:values)
         {
-            System.out.print((Object)o.toString()+" ");
+            System.out.println((Object)o.toString()+" ");
         }
     }
 

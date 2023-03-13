@@ -33,8 +33,8 @@ public class TestDemoBench
             timer.resume();
             bench.run();
             long time1 = timer.pause();
-            log.write("Run " + i + ":", time1);
+            log.write("Run " + i + " : " + time1);
         }
-        log.write("Finished in", timer.stop());
+        log.write("Finished in : " + timer.stop());
     }
 }
