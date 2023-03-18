@@ -2,7 +2,7 @@ package logging;
 
 public enum TimeUnit
 {
-    Micro, Mili, Sec;
+    Micro, Mili, Sec, Nano;
     public static double ChangeTimeUnit( long time, TimeUnit unit)
     {
         switch (unit)

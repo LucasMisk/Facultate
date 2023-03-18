@@ -3,6 +3,9 @@ package bench.cpu;
 import bench.*;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.MathContext;
+import java.math.RoundingMode;
+
 public class CPUDigitsOfPi implements iBenchmark {
     private double PILowPrecision(double PI, double n,
                               double sign)
@@ -20,33 +23,24 @@ public class CPUDigitsOfPi implements iBenchmark {
         return PI;
     }
 
-    private static BigDecimal PiLongPrecision(int scale) {
-        int digits = scale + 10;
-        BigDecimal a = BigDecimal.valueOf(1L << digits).setScale(0, BigDecimal.ROUND_HALF_UP);
-        BigDecimal b = BigDecimal.valueOf(0);
-        BigDecimal c = BigDecimal.valueOf(1);
-        BigDecimal d = BigDecimal.valueOf(1);
-        BigDecimal e = BigDecimal.valueOf(0);
-        BigDecimal f = BigDecimal.valueOf(0);
-        BigDecimal g = BigDecimal.valueOf(0);
-        BigInteger h;
-        int i = 0;
-        while (true) {
-            h = BigInteger.valueOf(2L).multiply(BigInteger.valueOf(i)).add(BigInteger.ONE);
-            a = a.multiply(c).divide(d, digits, BigDecimal.ROUND_HALF_UP);
-            b = b.multiply(c).divide(d, digits, BigDecimal.ROUND_HALF_UP);
-            d = d.add(e);
-            c = c.add(f);
-            e = e.add(g);
-            f = f.add(BigDecimal.valueOf(1L));
-            g = g.add(BigDecimal.valueOf(2L));
-            i++;
-            if (a.compareTo(b) >= 0) {
-                break;
-            }
+    private BigDecimal PIHighPrecision(int precision) {
+        BigDecimal PI = BigDecimal.ZERO;
+        BigDecimal sign = BigDecimal.ONE;
+        BigDecimal numerator = BigDecimal.valueOf(4);
+
+        for (int n = 1; n < precision; n=n+2) {
+            BigDecimal denominator = BigDecimal.valueOf(n + 1L)
+                    .multiply(BigDecimal.valueOf(n + 2L))
+                    .multiply(BigDecimal.valueOf(n + 3L));
+            BigDecimal term = numerator.divide(denominator, precision, RoundingMode.HALF_UP)
+                    .multiply(sign);
+            PI = PI.add(term);
+            sign = sign.negate();
         }
-        return a.add(b).setScale(scale, BigDecimal.ROUND_HALF_UP);
+
+        return PI.add(BigDecimal.valueOf(3));
     }
+
 
     @Override
     public void run() {
@@ -63,11 +57,10 @@ public class CPUDigitsOfPi implements iBenchmark {
                 System.out.println(result);
                 break;
             case 1:
-                BigDecimal pilong=PiLongPrecision(1000);
-                System.out.println(pilong);
+                BigDecimal result1=PIHighPrecision((Integer)params[1]);
+                System.out.println(result1);
                 break;
             case 2:
-                //alg3();
                 break;
             default:
                 throw new IllegalArgumentException("Unknown option");
@@ -88,5 +81,10 @@ public class CPUDigitsOfPi implements iBenchmark {
     @Override
     public void cancel() {
 
+    }
+
+    public void warmup()
+    {
+        BigDecimal result=PIHighPrecision(10000);
     }
 }

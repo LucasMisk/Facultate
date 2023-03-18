@@ -9,6 +9,11 @@ public class DummyBenchmark implements iBenchmark
     }
 
     @Override
+    public void warmup() {
+
+    }
+
+    @Override
     public void run(Object... params) {
 
     }

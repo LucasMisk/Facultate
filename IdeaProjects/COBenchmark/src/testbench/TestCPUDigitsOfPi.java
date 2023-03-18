@@ -12,11 +12,13 @@ public class TestCPUDigitsOfPi
         iLog log = new ConsoleLogger();
         TimeUnit Milisecond = TimeUnit.Mili;
         TimeUnit Microsecond = TimeUnit.Micro;
+        TimeUnit Nanosecond = TimeUnit.Nano;
         TimeUnit Second = TimeUnit.Sec;
         iBenchmark bench = new CPUDigitsOfPi();
         bench.initialize();
+        bench.warmup();
         timer.start();
-        bench.run(1);
+        bench.run(1,100000);
         long time = timer.stop();
         log.writeTime("Finished in", time, Milisecond);
         log.close();

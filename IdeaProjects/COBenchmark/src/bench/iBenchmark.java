@@ -10,4 +10,6 @@ public interface iBenchmark {
     void clean();
 
     void cancel();
+
+    void warmup();
 }
