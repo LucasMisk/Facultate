@@ -1,0 +1,9 @@
+AMD Ryzen 7 5700G (Home PC processor) - 460.7 GFLOPS
+Intel Core i3 1215U (Laptop processor) - 316.4 GFLOPS
+Intel Core i9-10885H - 532.7 GFLOPS
+
+Supercomputers:
+
+Frontier - 1102 petaFlops
+Fugaku - 442.010 petaFlops
+LUMI - 309.10 petaFlops

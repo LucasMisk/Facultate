@@ -12,7 +12,7 @@ import timing.iTimer;
 public class TestCpuFixedPoint {
     public static void main(String[] args)
     {
-        int size = 10000;
+        int size = 1000000;
         iTimer timer = new Timer();
         iLog log = new ConsoleLogger();
         TimeUnit Milisecond = TimeUnit.Mili;
