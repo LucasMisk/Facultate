@@ -4,8 +4,10 @@ import bench.*;
 
 
 public class CPURecursionLoopUnrolling implements iBenchmark{
-    long start;
-    long size;
+    private long start;
+    private long size;
+
+    private long helper;
     private boolean prime(long number)
     {
         if(number == 0)
@@ -34,31 +36,42 @@ public class CPURecursionLoopUnrolling implements iBenchmark{
         return -1;
     }
     private long recursive(long start, long size, int counter) {
+        long next_prime = 1;
+        long sum=0;
         try {
+            if (start < 0)
+                return 0;
             if (start >= size) {
                 return 0;
             }
-            long next_prime = find_next_prime(start, size);
+            start=next_prime;
+            next_prime = find_next_prime(start, size);
             counter++;
-            return next_prime + recursive(next_prime + 1, size, counter);
-        } catch (StackOverflowError e) {
-            //System.out.println("Reached nr " + start + "/" + size + " after " + counter + " calls.");
-            return 0;
+            sum=next_prime + recursive(next_prime + 1, size, counter);
+            return sum;
+        } catch (StackOverflowError ignored) {
+
+        } catch (NoClassDefFoundError e) {
         }
-        catch (NoClassDefFoundError e)
-        {
-            return 0;
-        }
+        helper=counter;
+        return start;
+    }
+    private void print_recursive(long start, long size, long counter)
+    {
+        System.out.println("Reached nr " + start + "/" + size + " after " + counter + " calls.");
     }
     private long recursiveUnrolled(long start, int unrollLevel, long size, int counter) {
         try {
             long sum = 0;
             long next_prime = 0;
-            while (start < size && unrollLevel > 0) {
+            long copy=unrollLevel;
+            while (start < size && copy > 0) {
+                if(start<0)
+                    return 0;
                 next_prime = find_next_prime(start, size);
                 sum += next_prime;
                 start = next_prime + 1;
-                unrollLevel--;
+                copy--;
             }
             counter++;
             if (start < size) {
@@ -79,8 +92,10 @@ public class CPURecursionLoopUnrolling implements iBenchmark{
     public void run(Object... params) {
         Boolean option = (Boolean)params[0];
 
-        if(!option)
-            recursive(start, size, 0);
+        if(!option) {
+            long start1=recursive(start, size, 0);
+            print_recursive(start1, size,helper);
+        }
         else
             recursiveUnrolled(start, (Integer) params[1], size,0);
     }

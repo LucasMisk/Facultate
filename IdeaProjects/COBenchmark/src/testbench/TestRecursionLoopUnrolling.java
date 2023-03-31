@@ -27,6 +27,7 @@ public class TestRecursionLoopUnrolling {
         timer.start();
         bench.run(true,5);
         long time1 = timer.stop();
+        log.writeTime("Finished in", time1, Milisecond);
         log.close();
         bench.clean();
     }
