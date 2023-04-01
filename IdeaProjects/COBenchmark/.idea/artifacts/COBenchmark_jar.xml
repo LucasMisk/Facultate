@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="COBenchmark:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/COBenchmark_jar</output-path>
+    <properties id="ant-preprocessing">
+      <options enabled="true" />
+    </properties>
+    <root id="archive" name="COBenchmark.jar">
+      <element id="module-output" name="COBenchmark" />
+    </root>
+  </artifact>
+</component>

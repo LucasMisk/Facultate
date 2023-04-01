@@ -33,7 +33,7 @@ public class CacheBenchmark {
             size=size*4;
         }
         long finalScore = sum/10;
-        log.write("Score : " + finalScore);
+        log.write("Final score : " + finalScore);
         log.close();
         bench.clean();
     }
