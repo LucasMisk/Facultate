@@ -17,6 +17,7 @@ public class CacheBenchmark {
         TimeUnit Microsecond = TimeUnit.Micro;
         TimeUnit Second = TimeUnit.Sec;
         iBenchmark bench = new CPURecursionLoopUnrolling();
+        long sum=0;
         long size = 10;
         int unrollLevel = 5;
         bench.warmup();
@@ -27,9 +28,12 @@ public class CacheBenchmark {
             bench.run(true, unrollLevel);
             long time = timer.stop();
             long score = bench.score(time);
-            log.write("Score : " + score);
+            sum+=score;
+            //log.write("Score : " + score);
             size=size*4;
         }
+        long finalScore = sum/10;
+        log.write("Score : " + finalScore);
         log.close();
         bench.clean();
     }
