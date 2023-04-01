@@ -37,19 +37,17 @@ public class CPURecursionLoopUnrolling implements iBenchmark{
         return -1;
     }
     private long recursive(long start, long size, int counter) {
-        long next_prime = 1;
-        long sum=0;
-        try {
-            if (start < 0)
-                return 0;
+        try
+        {
             if (start >= size) {
                 return 0;
             }
-            next_prime = find_next_prime(start, size);
-            start=next_prime;
+            long next_prime = find_next_prime(start, size);
+            if (next_prime == -1) {
+                return 0;
+            }
             counter++;
-            sum=next_prime + recursive(next_prime + 1, size, counter);
-            return sum;
+            return next_prime + recursive(next_prime, size, counter);
         } catch (StackOverflowError ignored) {
 
         } catch (NoClassDefFoundError e) {
@@ -65,27 +63,30 @@ public class CPURecursionLoopUnrolling implements iBenchmark{
     private long recursiveUnrolled(long start, int unrollLevel, long size, int counter) {
         try {
             long sum = 0;
-            long next_prime = 0;
+            long next_prime = start;
             long copy=unrollLevel;
             while (start < size && copy > 0) {
-                if(start<0)
+                if(next_prime<0)
                     return 0;
-                next_prime = find_next_prime(start, size);
                 sum += next_prime;
-                start = next_prime + 1;
+                next_prime = find_next_prime(next_prime, size);
                 copy--;
             }
             counter++;
-            if (start < size) {
-                sum += recursiveUnrolled(start, unrollLevel, size, counter);
+            if(next_prime>0)
+            {
+                helper = counter;
+                helper1 = next_prime;
             }
-            return sum;
+            if (start < size) {
+                return sum + recursiveUnrolled(next_prime, unrollLevel, size, counter);
+            }
+
+
         } catch (StackOverflowError e) {
         }
         catch (NoClassDefFoundError e) {
         }
-        helper=counter;
-        helper1=start;
         return 0;
     }
     private void print_recursiveUnrolled(long start, long size, long counter)
@@ -95,9 +96,11 @@ public class CPURecursionLoopUnrolling implements iBenchmark{
 
     @Override
     public long score(Object... params) {
-        long counter = helper;
-        double time = (long)params[0]/1000000.0;
-        return (long)(counter/time)*10;
+        double size1 = Math.log(size);
+        double number = Math.cbrt(helper1);
+        double time = Math.cbrt((long)params[0]/1000000.0);
+        double up = Math.sqrt(number*size1);
+        return (long)Math.cbrt(up*100000000/(time));
     }
 
     @Override
@@ -111,18 +114,18 @@ public class CPURecursionLoopUnrolling implements iBenchmark{
 
         if(!option) {
             recursive(start, size, 0);
-            print_recursive(helper1, size,helper);
+            //print_recursive(helper1, size,helper);
         }
         else {
             recursiveUnrolled(start, (Integer) params[1], size, 0);
-            print_recursiveUnrolled(helper1, size,helper);
+            //print_recursiveUnrolled(helper1, size,helper);
         }
     }
 
     @Override
     public void initialize(Object... params) {
         start = (Integer)params[0];
-        size = (Integer)params[1];
+        size = (long)params[1];
     }
 
     @Override
@@ -137,6 +140,7 @@ public class CPURecursionLoopUnrolling implements iBenchmark{
 
     @Override
     public void warmup() {
-
+        initialize(1,(long)1000000);
+        run(true, 5);
     }
 }
