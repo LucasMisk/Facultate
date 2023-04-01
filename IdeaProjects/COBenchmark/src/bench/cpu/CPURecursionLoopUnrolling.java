@@ -92,6 +92,14 @@ public class CPURecursionLoopUnrolling implements iBenchmark{
     {
         System.out.println("Reached nr " + start + "/" + size + " after " + counter + " calls.");
     }
+
+    @Override
+    public long score(Object... params) {
+        long counter = helper;
+        double time = (long)params[0]/1000000.0;
+        return (long)(counter/time)*10;
+    }
+
     @Override
     public void run() {
 
@@ -110,11 +118,6 @@ public class CPURecursionLoopUnrolling implements iBenchmark{
             print_recursiveUnrolled(helper1, size,helper);
         }
     }
-
-    //public int ratio(long start, long counter)
-    //{
-
-    //}
 
     @Override
     public void initialize(Object... params) {

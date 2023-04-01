@@ -5,6 +5,12 @@ import java.util.Random;
 public class DemoBenchmark implements iBenchmark {
     private int n;
     private int[] array;
+
+    @Override
+    public long score(Object... params) {
+        return 0;
+    }
+
     @Override
     public void run() {
         for (int i = 0; i < n-1; i++)

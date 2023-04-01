@@ -43,6 +43,11 @@ public class CPUDigitsOfPi implements iBenchmark {
 
 
     @Override
+    public long score(Object... params) {
+        return 0;
+    }
+
+    @Override
     public void run() {
 
     }

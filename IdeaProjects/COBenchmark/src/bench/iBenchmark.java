@@ -1,6 +1,7 @@
 package bench;
 
 public interface iBenchmark {
+    long score(Object... params);
     void run();
 
     void run(Object... params);

@@ -29,10 +29,11 @@ public class TestRecursionLoopUnrolling {
         bench.run(true,5);
         long time1 = timer.stop();
         log.writeTime("Finished in", time1, Milisecond);
+        long score=bench.score(time1);
+        log.write("Score : " + score);
         log.close();
         bench.clean();
     }
 }
 
-//907
-//909
+//score = calls/time

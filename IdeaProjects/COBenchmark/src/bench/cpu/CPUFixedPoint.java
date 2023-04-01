@@ -48,6 +48,11 @@ public class CPUFixedPoint implements iBenchmark{
 
 
     @Override
+    public long score(Object... params) {
+        return 0;
+    }
+
+    @Override
     public void run() {
         throw new IllegalStateException();
     }
