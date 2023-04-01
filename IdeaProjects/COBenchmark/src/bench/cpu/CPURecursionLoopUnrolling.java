@@ -8,11 +8,12 @@ public class CPURecursionLoopUnrolling implements iBenchmark{
     private long size;
 
     private long helper;
+    private long helper1;
     private boolean prime(long number)
     {
         if(number == 0)
             return false;
-        if(number==1)
+        if(number == 1)
             return false;
         if(number == 2)
             return true;
@@ -44,8 +45,8 @@ public class CPURecursionLoopUnrolling implements iBenchmark{
             if (start >= size) {
                 return 0;
             }
-            start=next_prime;
             next_prime = find_next_prime(start, size);
+            start=next_prime;
             counter++;
             sum=next_prime + recursive(next_prime + 1, size, counter);
             return sum;
@@ -54,7 +55,8 @@ public class CPURecursionLoopUnrolling implements iBenchmark{
         } catch (NoClassDefFoundError e) {
         }
         helper=counter;
-        return start;
+        helper1=start;
+        return 0;
     }
     private void print_recursive(long start, long size, long counter)
     {
@@ -79,9 +81,16 @@ public class CPURecursionLoopUnrolling implements iBenchmark{
             }
             return sum;
         } catch (StackOverflowError e) {
-            System.out.println("Reached nr " + start + "/" + size + " after " + counter + " calls.");
-            return 0;
         }
+        catch (NoClassDefFoundError e) {
+        }
+        helper=counter;
+        helper1=start;
+        return 0;
+    }
+    private void print_recursiveUnrolled(long start, long size, long counter)
+    {
+        System.out.println("Reached nr " + start + "/" + size + " after " + counter + " calls.");
     }
     @Override
     public void run() {
@@ -93,12 +102,19 @@ public class CPURecursionLoopUnrolling implements iBenchmark{
         Boolean option = (Boolean)params[0];
 
         if(!option) {
-            long start1=recursive(start, size, 0);
-            print_recursive(start1, size,helper);
+            recursive(start, size, 0);
+            print_recursive(helper1, size,helper);
         }
-        else
-            recursiveUnrolled(start, (Integer) params[1], size,0);
+        else {
+            recursiveUnrolled(start, (Integer) params[1], size, 0);
+            print_recursiveUnrolled(helper1, size,helper);
+        }
     }
+
+    //public int ratio(long start, long counter)
+    //{
+
+    //}
 
     @Override
     public void initialize(Object... params) {

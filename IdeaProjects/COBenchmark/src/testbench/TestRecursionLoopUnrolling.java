@@ -17,13 +17,14 @@ public class TestRecursionLoopUnrolling {
         TimeUnit Milisecond = TimeUnit.Mili;
         TimeUnit Microsecond = TimeUnit.Micro;
         TimeUnit Second = TimeUnit.Sec;
-
+        int size = 1000000000;
         iBenchmark bench = new CPURecursionLoopUnrolling();
-        bench.initialize(1, 1000000000);
+        bench.initialize(1, size);
         timer.start();
         bench.run(false);
         long time = timer.stop();
         log.writeTime("Finished in", time, Milisecond);
+        bench.initialize(1, size);
         timer.start();
         bench.run(true,5);
         long time1 = timer.stop();
@@ -32,3 +33,6 @@ public class TestRecursionLoopUnrolling {
         bench.clean();
     }
 }
+
+//907
+//909
