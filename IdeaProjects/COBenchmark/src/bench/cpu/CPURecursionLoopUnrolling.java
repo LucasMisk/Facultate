@@ -99,7 +99,7 @@ public class CPURecursionLoopUnrolling implements iBenchmark{
         double size1 = Math.log(size);
         double number = Math.cbrt(helper1);
         double time = Math.cbrt((long)params[0]/1000000.0);
-        double up = Math.sqrt(number*size1);
+        double up = Math.sqrt(number*size1*1000000);
         return (long)Math.cbrt(up*100000000/(time));
     }
 
