@@ -143,4 +143,9 @@ public class CPURecursionLoopUnrolling implements iBenchmark{
         initialize(1,(long)1000000);
         run(true, 5);
     }
+
+    @Override
+    public String getResult() {
+        return null;
+    }
 }

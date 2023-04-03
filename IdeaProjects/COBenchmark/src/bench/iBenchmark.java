@@ -13,4 +13,6 @@ public interface iBenchmark {
     void cancel();
 
     void warmup();
+
+    String getResult();
 }

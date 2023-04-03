@@ -92,4 +92,9 @@ public class CPUFixedPoint implements iBenchmark{
     public void warmup() {
 
     }
+
+    @Override
+    public String getResult() {
+        return null;
+    }
 }

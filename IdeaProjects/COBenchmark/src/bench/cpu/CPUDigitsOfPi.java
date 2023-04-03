@@ -92,4 +92,9 @@ public class CPUDigitsOfPi implements iBenchmark {
     {
         BigDecimal result=PIHighPrecision(10000);
     }
+
+    @Override
+    public String getResult() {
+        return null;
+    }
 }

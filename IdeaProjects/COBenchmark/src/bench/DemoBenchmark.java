@@ -28,6 +28,11 @@ public class DemoBenchmark implements iBenchmark {
     }
 
     @Override
+    public String getResult() {
+        return null;
+    }
+
+    @Override
     public void run(Object... params)
     {
 
