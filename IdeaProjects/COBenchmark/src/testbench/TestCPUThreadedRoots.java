@@ -28,6 +28,7 @@ public class TestCPUThreadedRoots
             long score = bench.score(workload, i, time);
             log.write("Final score : " + score);
         }
+
         bench.clean();
         log.close();
     }
