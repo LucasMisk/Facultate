@@ -20,7 +20,7 @@ public class TestCPUThreadedRoots
         int workload=10000000;
         bench.initialize(workload);
         bench.warmup();
-        for (int i = 1; i <= 8; i = i * 2) {
+        for (int i = 1; i <= 16; i = i * 2) {
             timer.start();
             bench.run(i);
             long time = timer.stop();
