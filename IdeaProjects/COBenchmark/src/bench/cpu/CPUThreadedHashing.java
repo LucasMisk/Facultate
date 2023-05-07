@@ -114,6 +114,7 @@ public class CPUThreadedHashing implements iBenchmark {
         @Override
         public void run() {
             // if we found the hash
+            System.out.println(text);
             if (expectedHash == hasher.hash(text)) {
                 // stop condition#2
                 running = false;
@@ -159,37 +160,34 @@ public class CPUThreadedHashing implements iBenchmark {
          *         - Null: if there is no further combination after given text, e.g.,
          *         "zz...zzz"
          */
+        int end = charSet.length() - 1;
         public String getNextString(String text) {
             int[] index = new int[text.length()];
-            int end = charSet.length() - 1;
-            int len = text.length()-1;
+            int len = text.length() - 1;
 
-            for(int i = 0 ; i <= len ; i++)
-            {
-                index[i] = text.charAt(i)-97;
+            for(int i = 0; i <= len; i++) {
+                index[i] = text.charAt(i) - 'a';
             }
 
             index[len]++;
-            for(int i=len; i>=0; i--)
-            {
-                if(i==0 && index[i]>25)
-                {
+            for(int i = len; i >= 0; i--) {
+                if(i == 0 && index[i] > end) {
                     return null;
                 }
-                if(index[i]>25 && i>0)
-                {
-                    index[i-1]++;
+                if(index[i] > end) {
+                    index[i - 1]++;
                     index[i] = 0;
                 }
             }
-            result="";
-            for(int i = 0 ; i<=len ; i++)
-            {
-                result = result + (char)(97+index[i]);
+
+            StringBuilder sb = new StringBuilder(len + 1);
+            for(int i = 0; i <= len; i++) {
+                sb.append((char)('a' + index[i]));
             }
 
-            return result;
+            return sb.toString();
         }
+
 
         // can be used as an alternative to getNextString, but it will be infinitely slower to break longer hashes
         Random rand = new Random();

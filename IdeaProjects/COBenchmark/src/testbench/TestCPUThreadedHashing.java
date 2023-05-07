@@ -12,8 +12,12 @@ public class TestCPUThreadedHashing {
     public static void main(String[] args) {
         iBenchmark bench = new CPUThreadedHashing();
         int maxLength = 10;
-        int nThreads = 8;
-        int hashCode = 46053341;
+        int nThreads = 16;
+        int hashCode = 52703576;
+
+        //317266982
+        //1018655712 = break
+        //
         TimeUnit Milisecond = TimeUnit.Mili;
         TimeUnit Microsecond = TimeUnit.Micro;
         TimeUnit Nanosecond = TimeUnit.Nano;
