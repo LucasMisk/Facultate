@@ -13,7 +13,7 @@ public class TestCPUThreadedHashing {
         iBenchmark bench = new CPUThreadedHashing();
         int maxLength = 10;
         int nThreads = 16;
-        int hashCode = 52703576;
+        int hashCode = 317266982;
 
         //317266982
         //1018655712 = break

@@ -114,7 +114,6 @@ public class CPUThreadedHashing implements iBenchmark {
         @Override
         public void run() {
             // if we found the hash
-            System.out.println(text);
             if (expectedHash == hasher.hash(text)) {
                 // stop condition#2
                 running = false;
@@ -162,43 +161,33 @@ public class CPUThreadedHashing implements iBenchmark {
          */
         int end = charSet.length() - 1;
         public String getNextString(String text) {
-            int[] index = new int[text.length()];
+            char[] txt = text.toCharArray();
             int len = text.length() - 1;
-
-            for(int i = 0; i <= len; i++) {
-                index[i] = text.charAt(i) - 'a';
-            }
-
-            index[len]++;
-            for(int i = len; i >= 0; i--) {
-                if(i == 0 && index[i] > end) {
+            txt[len]++;
+            for (int i = len; i >= 0; i--) {
+                if (i == 0 && txt[i] > 'z') {
                     return null;
                 }
-                if(index[i] > end) {
-                    index[i - 1]++;
-                    index[i] = 0;
+                if (txt[i] > 'z') {
+                    txt[i - 1]++;
+                    txt[i] = 'a';
                 }
             }
-
-            StringBuilder sb = new StringBuilder(len + 1);
-            for(int i = 0; i <= len; i++) {
-                sb.append((char)('a' + index[i]));
-            }
-
-            return sb.toString();
+            return new String(txt);
         }
+
 
 
         // can be used as an alternative to getNextString, but it will be infinitely slower to break longer hashes
         Random rand = new Random();
         public String getRandomString(int length) {
-            String text = "";
+            StringBuilder text = new StringBuilder();
             for (int i = 0; i < length; i++) {
                 char c = charSet.charAt(rand.nextInt(charSet.length()));
-                text += c;
+                text.append(c);
             }
 
-            return text;
+            return text.toString();
         }
     }
 
