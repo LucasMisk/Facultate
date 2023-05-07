@@ -123,8 +123,7 @@ public class CPUThreadedHashing implements iBenchmark {
         }
     }
 
-    /**
-     * Used to compute hashes from strings
+    /**Used to compute hashes from strings
      */
     class HashManager {
 
