@@ -79,7 +79,7 @@ public class CPUThreadedRoots implements iBenchmark {
 
     @Override
     public String getResult() {
-        return String.valueOf(result);
+        return null;
     }
 
     class SquareRootTask implements Runnable {

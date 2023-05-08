@@ -8,6 +8,7 @@ import bench.iBenchmark;
 
 public class CPUThreadedHashing implements iBenchmark {
 
+    boolean ok=false;
     private String result;
     volatile boolean running = true;
 
@@ -42,12 +43,11 @@ public class CPUThreadedHashing implements iBenchmark {
         // 52703576
         // 605107138
 
-        int length = 2;
+        int length = 7;
 
         ExecutorService executor = Executors.newFixedThreadPool(nThreads);
         HashManager hasher = new HashManager();
-        String text = "aa";
-
+        char[] text = {'g','v','p','h','q','c','s'};
         while (running) {
             HashBreakerTask worker = new HashBreakerTask(hasher, text, hashCode);
             // assign new runnable to executor
@@ -61,14 +61,15 @@ public class CPUThreadedHashing implements iBenchmark {
             }
 
             // reset string to "aaa...a" with length+1
-            if (text == null) {
+            if (ok) {
                 length++;
-                text = "aa";
-                for (int i = 2; i < length; ++i)
-                    text += "a";
+                text=new char[length];
+                for (int i = 0; i < length; ++i) {
+                    text[i]='a';
+                }
+                ok=false;
             }
         }
-
         // stop executor
         executor.shutdown();
         while (!executor.isTerminated()) {
@@ -92,7 +93,7 @@ public class CPUThreadedHashing implements iBenchmark {
 
     @Override
     public String getResult() {
-        return String.valueOf(result);
+        return result;
     }
 
     class HashBreakerTask implements Runnable {
@@ -100,11 +101,11 @@ public class CPUThreadedHashing implements iBenchmark {
         // used to compute hashes from strings
         private final HashManager hasher;
         // the string to be hashed
-        private final String text;
+        private final char[] text;
         // the expected hash output
         private final int expectedHash;
 
-        public HashBreakerTask(HashManager hasher, String text, int expectedHash) {
+        public HashBreakerTask(HashManager hasher, char[] text, int expectedHash) {
             this.hasher = hasher;
             this.text = text;
             // 'text' is hashed and compared to 'expected hash'
@@ -114,11 +115,11 @@ public class CPUThreadedHashing implements iBenchmark {
         @Override
         public void run() {
             // if we found the hash
-            if (expectedHash == hasher.hash(text)) {
+            if (expectedHash == hasher.hash(text)){
                 // stop condition#2
                 running = false;
                 //save password text as result to be printed on screen
-                result = text;
+                result = new String(text);
             }
         }
     }
@@ -131,10 +132,10 @@ public class CPUThreadedHashing implements iBenchmark {
         private final String charSet = "abcdefghijklmnopqrstuvwxyz";
 
         // do not change function
-        public int hash(String text) {
+        public int hash(char[] text) {
             int a = 0;
             int b = 0;
-            for (char c : text.toCharArray()) {
+            for (char c : text) {
                 int index = charSet.indexOf(c);
                 if (index == -1)
                     index = charSet.length() + 1;
@@ -160,20 +161,22 @@ public class CPUThreadedHashing implements iBenchmark {
          *         "zz...zzz"
          */
         int end = charSet.length() - 1;
-        public String getNextString(String text) {
-            char[] txt = text.toCharArray();
-            int len = text.length() - 1;
-            txt[len]++;
+        public char[] getNextString(char[] text) {
+            int len = text.length - 1;
+            text[len]++;
             for (int i = len; i >= 0; i--) {
-                if (i == 0 && txt[i] > 'z') {
-                    return null;
+                if (i == 0 && text[i] > 'z') {
+                    ok=true;
                 }
-                if (txt[i] > 'z') {
-                    txt[i - 1]++;
-                    txt[i] = 'a';
+                if (text[i] > 'z' && i>0) {
+                    text[i - 1]++;
+                    text[i] = 'a';
                 }
             }
-            return new String(txt);
+            System.out.println(text);
+            char[] result = new char[text.length];
+            System.arraycopy(text, 0, result, 0,text.length);
+            return result;
         }
 
 
@@ -181,13 +184,13 @@ public class CPUThreadedHashing implements iBenchmark {
         // can be used as an alternative to getNextString, but it will be infinitely slower to break longer hashes
         Random rand = new Random();
         public String getRandomString(int length) {
-            StringBuilder text = new StringBuilder();
+            StringBuilder txt = new StringBuilder();
             for (int i = 0; i < length; i++) {
                 char c = charSet.charAt(rand.nextInt(charSet.length()));
-                text.append(c);
+                txt.append(c);
             }
 
-            return text.toString();
+            return txt.toString();
         }
     }
 
