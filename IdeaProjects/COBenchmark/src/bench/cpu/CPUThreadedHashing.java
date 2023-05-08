@@ -47,7 +47,7 @@ public class CPUThreadedHashing implements iBenchmark {
 
         ExecutorService executor = Executors.newFixedThreadPool(nThreads);
         HashManager hasher = new HashManager();
-        char[] text = {'g','v','p','h','q','c','s'};
+        char[] text = {'m','t','q','x','k','s','m'};
         while (running) {
             HashBreakerTask worker = new HashBreakerTask(hasher, text, hashCode);
             // assign new runnable to executor
