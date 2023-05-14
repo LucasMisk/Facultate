@@ -33,12 +33,12 @@ public class HDDWriteSpeed implements iBenchmark {
         // true/false whether the written files should be deleted at the end
         Boolean clean = (Boolean) options[1];
 
-        String prefix = "/home/lucas/HDD/file";
+        String prefix = "C:\\Users\\Lucas\\Facultate\\HDD\\file";
         String suffix = ".dat";
         int minIndex = 0;
         int maxIndex = 8;
-        long fileSize = 256*1024*1024; // 256, 512 MB, 1GB // type Long!
-        int buffersize = 4*1024; // 4 KB
+        long fileSize = 512*1024*1024; // 256, 512 MB, 1GB // type Long!
+        int buffersize = 2*1024; // 4 KB
 
         try {
             if (option.equals("fs"))

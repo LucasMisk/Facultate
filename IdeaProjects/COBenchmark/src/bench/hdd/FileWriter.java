@@ -10,9 +10,9 @@ import timing.Timer;
 public class FileWriter {
 
     private static final int MIN_BUFFER_SIZE = 1024 * 1; // KB
-    private static final int MAX_BUFFER_SIZE = 1024 * 1024 * 32; // MB
+    private static final int MAX_BUFFER_SIZE = 1024 * 1024 * 64; // MB
     private static final long MIN_FILE_SIZE = 1024 * 1024 * 1; // MB
-    private static final long MAX_FILE_SIZE = 1024 * 1024 * 512; // MB
+    private static final long MAX_FILE_SIZE = 1024 * 1024 * 1024; // GB
     private Timer timer = new Timer();
     private Random rand = new Random();
     private double benchScore;
@@ -46,13 +46,13 @@ public class FileWriter {
                 && fileIndex <= maxIndex - minIndex) {
             fileName = filePrefix + fileIndex + fileSuffix;
             writeFile(fileName, currentBufferSize, fileSize, clean);
-            currentBufferSize=currentBufferSize*2;
+            currentBufferSize=currentBufferSize*4;
             fileIndex++;
         }
 
         benchScore /= (maxIndex - minIndex + 1);
-        //String partition = filePrefix.substring(0, filePrefix.indexOf(":\\"));
-        System.out.println("File write score on partition " + ": "
+        String partition = filePrefix.substring(0, filePrefix.indexOf(":\\"));
+        System.out.println("File write score on partition "+ partition + ": "
                 + String.format("%.2f", benchScore) + " MB/sec");
     }
 
@@ -79,18 +79,22 @@ public class FileWriter {
         String fileName;
         int fileIndex = 0;
         benchScore = 0;
-
+        int i=0;
         while (currentFileSize <= MAX_FILE_SIZE
                 && fileIndex <= maxIndex - minIndex) {
             fileName = filePrefix + fileIndex + fileSuffix;
             writeFile(fileName, bufferSize, currentFileSize, clean);
-            currentFileSize = currentFileSize*2;
+            i++;
+            if(i>=3)
+                currentFileSize = (currentFileSize/100)*1024;
+            else
+                currentFileSize = currentFileSize*10;
             fileIndex++;
         }
 
         benchScore /= (maxIndex - minIndex + 1);
-        //String partition = filePrefix.substring(0, filePrefix.indexOf(":\\"));
-        System.out.println("File write score on partition " + ": "
+        String partition = filePrefix.substring(0, filePrefix.indexOf(":\\"));
+        System.out.println("File write score on partition " + partition + ": "
                 + String.format("%.2f", benchScore) + " MB/sec");
     }
 
