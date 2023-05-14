@@ -43,11 +43,11 @@ public class CPUThreadedHashing implements iBenchmark {
         // 52703576
         // 605107138
 
-        int length = 7;
+        int length = 2;
 
         ExecutorService executor = Executors.newFixedThreadPool(nThreads);
         HashManager hasher = new HashManager();
-        char[] text = {'m','t','q','x','k','s','m'};
+        char[] text = {'a','a'};
         while (running) {
             HashBreakerTask worker = new HashBreakerTask(hasher, text, hashCode);
             // assign new runnable to executor
@@ -163,19 +163,20 @@ public class CPUThreadedHashing implements iBenchmark {
         int end = charSet.length() - 1;
         public char[] getNextString(char[] text) {
             int len = text.length - 1;
-            text[len]++;
-            for (int i = len; i >= 0; i--) {
-                if (i == 0 && text[i] > 'z') {
-                    ok=true;
-                }
-                if (text[i] > 'z' && i>0) {
-                    text[i - 1]++;
-                    text[i] = 'a';
-                }
-            }
-            System.out.println(text);
             char[] result = new char[text.length];
             System.arraycopy(text, 0, result, 0,text.length);
+            result[len]++;
+            for (int i = len; i >= 0; i--) {
+                if (i == 0 && result[i] > 'z') {
+                    ok=true;
+                }
+                if (result[i] > 'z' && i>0) {
+                    result[i - 1]++;
+                    result[i] = 'a';
+                }
+            }
+            //  System.out.println(result);
+            text=null;
             return result;
         }
 

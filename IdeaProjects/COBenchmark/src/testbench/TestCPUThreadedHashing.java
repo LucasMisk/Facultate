@@ -13,8 +13,9 @@ public class TestCPUThreadedHashing {
         iBenchmark bench = new CPUThreadedHashing();
         int maxLength = 10;
         int nThreads = 16;
-        int hashCode = 132368363;
+        int hashCode = 52703576;
 
+        //132368363 = ntqblll
         //317266982 = direct
         //1018655712 = break
         //
