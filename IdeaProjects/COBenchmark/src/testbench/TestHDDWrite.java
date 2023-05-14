@@ -7,7 +7,7 @@ public class TestHDDWrite {
     public static void main(String[] args)
     {
         iBenchmark bench= new HDDWriteSpeed();
-        bench.run("fs", true);
+        bench.run("fb", true);
         bench.clean();
     }
 }

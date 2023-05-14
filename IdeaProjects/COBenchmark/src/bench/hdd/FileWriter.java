@@ -83,6 +83,7 @@ public class FileWriter {
         while (currentFileSize <= MAX_FILE_SIZE
                 && fileIndex <= maxIndex - minIndex) {
             fileName = filePrefix + fileIndex + fileSuffix;
+            writeFile(fileName, bufferSize, currentFileSize, clean);
             currentFileSize = currentFileSize*2;
             fileIndex++;
         }
