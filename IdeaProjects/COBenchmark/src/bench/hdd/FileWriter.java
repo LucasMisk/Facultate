@@ -51,8 +51,8 @@ public class FileWriter {
         }
 
         benchScore /= (maxIndex - minIndex + 1);
-        String partition = filePrefix.substring(0, filePrefix.indexOf(":\\"));
-        System.out.println("File write score on partition "+ partition + ": "
+        //String partition = filePrefix.substring(0, filePrefix.indexOf(":\\"));
+        System.out.println("File write score on partition "/*partition*/ + ": "
                 + String.format("%.2f", benchScore) + " MB/sec");
     }
 
@@ -93,8 +93,8 @@ public class FileWriter {
         }
 
         benchScore /= (maxIndex - minIndex + 1);
-        String partition = filePrefix.substring(0, filePrefix.indexOf(":\\"));
-        System.out.println("File write score on partition " + partition + ": "
+        //String partition = filePrefix.substring(0, filePrefix.indexOf(":\\"));
+        System.out.println("File write score on partition " /*partition*/  + ": "
                 + String.format("%.2f", benchScore) + " MB/sec");
     }
 

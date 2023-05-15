@@ -33,7 +33,8 @@ public class HDDWriteSpeed implements iBenchmark {
         // true/false whether the written files should be deleted at the end
         Boolean clean = (Boolean) options[1];
 
-        String prefix = "C:\\Users\\Lucas\\Facultate\\HDD\\file";
+        //String prefix = "C:\\Users\\Lucas\\Facultate\\HDD\\file";
+        String prefix = "/home/lucas/HDD/file";
         String suffix = ".dat";
         int minIndex = 0;
         int maxIndex = 8;
