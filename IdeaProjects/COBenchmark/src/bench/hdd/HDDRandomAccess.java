@@ -11,7 +11,8 @@ import bench.iBenchmark;
 
 public class HDDRandomAccess implements iBenchmark {
 
-    private final static String PATH = "/home/lucas/HDD/test.raf";
+    //private final static String PATH = "/home/lucas/HDD/test.raf";
+    private final static String PATH = "D:\\Lucas\\Personale\\Lucas\\Universitate\\HDD\\test.raf";
     private String result;
 
     @Override
@@ -89,7 +90,7 @@ public class HDDRandomAccess implements iBenchmark {
                             bufferSize, runtime);
                     result = ios + " I/Os per second ["
                             + (ios * bufferSize / 1024 / 1024) + " MB, "
-                            + 1.0 * (ios * bufferSize / 1024 / 1024) / runtime * 1000 + "MB/s]";
+                            + (1.0) * (ios * bufferSize / 1024 / 1024) / runtime * 1000 + "MB/s]";
                 } else
                     throw new UnsupportedOperationException("Read option \""
                             + String.valueOf(param[1])
